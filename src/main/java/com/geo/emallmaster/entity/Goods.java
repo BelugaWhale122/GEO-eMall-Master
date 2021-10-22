@@ -1,12 +1,14 @@
 package com.geo.emallmaster.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Table(name = "goods_info")
 @Entity
+@Data
 public class Goods {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,131 +63,4 @@ public class Goods {
     @Column(name = "tag", nullable = false, length = 20)
     private String tag;
 
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(Integer updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(Integer createUser) {
-        this.createUser = createUser;
-    }
-
-    public Integer getGoodsSellStatus() {
-        return goodsSellStatus;
-    }
-
-    public void setGoodsSellStatus(Integer goodsSellStatus) {
-        this.goodsSellStatus = goodsSellStatus;
-    }
-
-    public String getGoodsCoverImg() {
-        return goodsCoverImg;
-    }
-
-    public void setGoodsCoverImg(String goodsCoverImg) {
-        this.goodsCoverImg = goodsCoverImg;
-    }
-
-    public Integer getStockNum() {
-        return stockNum;
-    }
-
-    public void setStockNum(Integer stockNum) {
-        this.stockNum = stockNum;
-    }
-
-    public Integer getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(Integer sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
-    public Integer getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(Integer originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public String getGoodsDetailContent() {
-        return goodsDetailContent;
-    }
-
-    public void setGoodsDetailContent(String goodsDetailContent) {
-        this.goodsDetailContent = goodsDetailContent;
-    }
-
-    public String getGoodsCarousel() {
-        return goodsCarousel;
-    }
-
-    public void setGoodsCarousel(String goodsCarousel) {
-        this.goodsCarousel = goodsCarousel;
-    }
-
-    public Long getGoodsCategoryId() {
-        return goodsCategoryId;
-    }
-
-    public void setGoodsCategoryId(Long goodsCategoryId) {
-        this.goodsCategoryId = goodsCategoryId;
-    }
-
-    public String getGoodsIntro() {
-        return goodsIntro;
-    }
-
-    public void setGoodsIntro(String goodsIntro) {
-        this.goodsIntro = goodsIntro;
-    }
-
-    public String getGoodsName() {
-        return goodsName;
-    }
-
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
-
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
 }

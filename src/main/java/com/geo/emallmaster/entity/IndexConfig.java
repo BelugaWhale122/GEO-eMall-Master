@@ -1,12 +1,14 @@
 package com.geo.emallmaster.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Table(name = "index_config")
 @Entity
+@Data
 public class IndexConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,91 +47,4 @@ public class IndexConfig {
     @Column(name = "update_user", nullable = false)
     private Integer updateUser;
 
-    public Integer getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(Integer updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(Integer createUser) {
-        this.createUser = createUser;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Integer isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public Integer getConfigRank() {
-        return configRank;
-    }
-
-    public void setConfigRank(Integer configRank) {
-        this.configRank = configRank;
-    }
-
-    public String getRedirectUrl() {
-        return redirectUrl;
-    }
-
-    public void setRedirectUrl(String redirectUrl) {
-        this.redirectUrl = redirectUrl;
-    }
-
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public Integer getConfigType() {
-        return configType;
-    }
-
-    public void setConfigType(Integer configType) {
-        this.configType = configType;
-    }
-
-    public String getConfigName() {
-        return configName;
-    }
-
-    public void setConfigName(String configName) {
-        this.configName = configName;
-    }
-
-    public Long getConfigId() {
-        return configId;
-    }
-
-    public void setConfigId(Long configId) {
-        this.configId = configId;
-    }
 }

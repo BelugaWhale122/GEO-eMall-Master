@@ -1,12 +1,14 @@
 package com.geo.emallmaster.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Table(name = "order_item")
 @Entity
+@Data
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,67 +37,4 @@ public class OrderItem {
     @Column(name = "create_time", nullable = false)
     private Date createTime;
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getGoodsCount() {
-        return goodsCount;
-    }
-
-    public void setGoodsCount(Integer goodsCount) {
-        this.goodsCount = goodsCount;
-    }
-
-    public Integer getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(Integer sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
-    public String getGoodsCoverImg() {
-        return goodsCoverImg;
-    }
-
-    public void setGoodsCoverImg(String goodsCoverImg) {
-        this.goodsCoverImg = goodsCoverImg;
-    }
-
-    public String getGoodsName() {
-        return goodsName;
-    }
-
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
-
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Long getOrderItemId() {
-        return orderItemId;
-    }
-
-    public void setOrderItemId(Long orderItemId) {
-        this.orderItemId = orderItemId;
-    }
 }

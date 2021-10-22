@@ -1,5 +1,7 @@
 package com.geo.emallmaster.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Table(name = "user", indexes = {
@@ -8,6 +10,7 @@ import javax.persistence.*;
         @UniqueConstraint(name = "user_user_id_uindex", columnNames = {"user_id"})
 })
 @Entity
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,67 +38,4 @@ public class User {
     @Column(name = "locked_flag", nullable = false)
     private Integer lockedFlag;
 
-    public Integer getLockedFlag() {
-        return lockedFlag;
-    }
-
-    public void setLockedFlag(Integer lockedFlag) {
-        this.lockedFlag = lockedFlag;
-    }
-
-    public Integer getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Integer isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getIntroduceSign() {
-        return introduceSign;
-    }
-
-    public void setIntroduceSign(String introduceSign) {
-        this.introduceSign = introduceSign;
-    }
-
-    public String getPasswordMd5() {
-        return passwordMd5;
-    }
-
-    public void setPasswordMd5(String passwordMd5) {
-        this.passwordMd5 = passwordMd5;
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 }
