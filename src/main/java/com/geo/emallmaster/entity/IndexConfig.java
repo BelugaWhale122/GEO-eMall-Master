@@ -6,6 +6,12 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @author Xu
+ * @version 1.0
+ * @date 2021/10/14
+ */
+
 @Table(name = "index_config")
 @Entity
 @Data

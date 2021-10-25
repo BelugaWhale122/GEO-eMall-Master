@@ -5,6 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Xu
+ * @version 1.0
+ * @date 2021/10/14
+ */
+
 @SpringBootApplication
 @RestController
 public class EMallMasterApplication {

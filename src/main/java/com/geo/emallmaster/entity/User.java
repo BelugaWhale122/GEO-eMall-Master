@@ -4,6 +4,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * @author Xu
+ * @version 1.0
+ * @date 2021/10/14
+ */
+
 @Table(name = "user", indexes = {
         @Index(name = "user_login_name_uindex", columnList = "login_name", unique = true)
 }, uniqueConstraints = {

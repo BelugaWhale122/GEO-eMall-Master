@@ -7,6 +7,13 @@ import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
 
+/**
+ * @author Xu
+ * @version 1.0
+ * @date 2021/10/14
+ */
+
+
 @Table(name = "`order`", indexes = {
         @Index(name = "mall_order_order_no_uindex", columnList = "order_no", unique = true)
 })

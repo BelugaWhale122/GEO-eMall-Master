@@ -6,6 +6,12 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @author Xu
+ * @version 1.0
+ * @date 2021/10/14
+ */
+
 @Table(name = "shopping_cart_item", indexes = {
         @Index(name = "mall_shopping_cart_item_user_id_uindex", columnList = "user_id", unique = true)
 })
