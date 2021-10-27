@@ -6,7 +6,7 @@ spring:
     name: GEO-eMall-Master
   profiles:
     active: dev
-  #数据库
+  #数据库配置
   datasource:
     name: geoemall
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,11 +22,15 @@ spring:
       connection-timeout: 30000 #连接超时时间
       connection-test-query: SELECT 1 #连接测试查询
 
-  # jackson时间格式化
-  jackson:
-    time-zone: GMT+8
-    date-format: yyyy-MM-dd HH:mm:ss
+  #thymeleaf模板引擎
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
 
-#mybatis
+#mybatis配置
 mybatis:
-  mapper-locations:
+  type-aliases-package: com.geo.emallmaster.entity
+  mapper-locations: classpath:mapper/*Dao.xml
+
