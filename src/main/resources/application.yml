@@ -32,5 +32,5 @@ spring:
 #mybatis配置
 mybatis:
   type-aliases-package: com.geo.emallmaster.entity
-  mapper-locations: classpath:mapper/*Dao.xml
+  mapper-locations: classpath:mapper/*Mapper.xml
 
