@@ -16,16 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 public class AdminLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("进入拦截器....");
         String servletPath = request.getServletPath();
         if (servletPath.startsWith("/admin") && request.getSession().getAttribute("loginUser") == null) {
             request.getSession().setAttribute("errorMsg", "请登录");
             response.sendRedirect(request.getContextPath() + "/admin/login");
-            System.out.println("拦截成功！");
             return false;
         } else {
             request.getSession().removeAttribute("errorMsg");
-            System.out.println("拦截器放行..");
             return true;
         }
     }

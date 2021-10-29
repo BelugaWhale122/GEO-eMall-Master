@@ -5,10 +5,7 @@ import com.geo.emallmaster.entity.AdminUser;
 import com.geo.emallmaster.service.AdminUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -52,15 +49,62 @@ public class AdminController {
         }
 
         AdminUser adminUser = adminUserService.login(userName, password);
-        if (adminUser!=null){
+        if (adminUser != null) {
             session.setAttribute("loginUser", adminUser.getNickName());
             session.setAttribute("loginUserId", adminUser.getAdminUserId());
             //session过期时间设置为7200秒 即两小时
             //session.setMaxInactiveInterval(60 * 60 * 2);
             return "redirect:/admin/index";
-        }else {
+        } else {
             session.setAttribute("errorMsg", "登录信息错误");
             return "admin/login";
+        }
+    }
+
+    @GetMapping("/profile")
+    public String profile(HttpServletRequest request) {
+        Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
+        AdminUser adminUser = adminUserService.getUserById(loginUserId);
+        if (adminUser == null) {
+            return "admin/login";
+        }
+        request.setAttribute("path", "profile");
+        request.setAttribute("loginUserName", adminUser.getLoginAdminName());
+        request.setAttribute("nickName", adminUser.getNickName());
+        return "admin/profile";
+    }
+
+    @PostMapping("/profile/name")
+    @ResponseBody
+    public String updateName(HttpServletRequest request, @RequestParam("loginUserName") String loginUserName,
+                             @RequestParam("nickName") String nickName) {
+        if (StringUtils.isEmpty(loginUserName) || StringUtils.isEmpty(nickName)) {
+            return "用户名/昵称 不能为空";
+        }
+        Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
+        if (adminUserService.updateName(loginUserId, loginUserName, nickName)) {
+            return "success";
+        } else {
+            return "修改失败";
+        }
+    }
+
+    @PostMapping("/profile/password")
+    @ResponseBody
+    public String updatePassword(HttpServletRequest request, @RequestParam("originalPassword") String originalPassword,
+                                 @RequestParam("newPassword") String newPassword) {
+        if (StringUtils.isEmpty(originalPassword) || StringUtils.isEmpty(newPassword)) {
+            return "密码不能为空";
+        }
+        Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
+        if (adminUserService.updatePassword(loginUserId, originalPassword, newPassword)) {
+            //修改成功后清空session中的数据，前端控制跳转至登录页
+            request.getSession().removeAttribute("loginUserId");
+            request.getSession().removeAttribute("loginUser");
+            request.getSession().removeAttribute("errorMsg");
+            return "success";
+        } else {
+            return "修改失败";
         }
     }
 

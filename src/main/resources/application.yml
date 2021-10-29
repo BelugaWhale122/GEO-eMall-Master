@@ -27,7 +27,7 @@ spring:
     cache: false
     prefix: classpath:/templates/
     suffix: .html
-    mode: LEGACYHTML5
+    mode: HTML5
 
 #mybatis配置
 mybatis:
