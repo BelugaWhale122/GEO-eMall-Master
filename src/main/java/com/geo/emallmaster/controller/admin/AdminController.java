@@ -124,4 +124,12 @@ public class AdminController {
         request.setAttribute("path", "category");
         return "admin/category";
     }
+
+    @GetMapping("/logout")
+    private String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("loginUserId");
+        request.getSession().removeAttribute("loginUser");
+        request.getSession().removeAttribute("errorMsg");
+        return "admin/login";
+    }
 }
