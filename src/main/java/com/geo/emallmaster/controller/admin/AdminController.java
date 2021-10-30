@@ -1,6 +1,5 @@
 package com.geo.emallmaster.controller.admin;
 
-import com.geo.emallmaster.dao.AdminUserMapper;
 import com.geo.emallmaster.entity.AdminUser;
 import com.geo.emallmaster.service.AdminUserService;
 import org.springframework.stereotype.Controller;
@@ -32,21 +31,21 @@ public class AdminController {
     @PostMapping(value = "/login")
     public String login(@RequestParam("userName") String userName,
                         @RequestParam("password") String password,
-                        @RequestParam("verifyCode") String verifyCode,
+//                        @RequestParam("verifyCode") String verifyCode,
                         HttpSession session) {
-        if (StringUtils.isEmpty(verifyCode)) {
-            session.setAttribute("errorMsg", "验证码不能为空");
-            return "admin/login";
-        }
+//        if (StringUtils.isEmpty(verifyCode)) {
+//            session.setAttribute("errorMsg", "验证码不能为空");
+//            return "admin/login";
+//        }
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) {
             session.setAttribute("errorMsg", "用户名或密码不能为空");
             return "admin/login";
         }
-        String kaptchaCode = session.getAttribute("verifyCode") + "";
-        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
-            session.setAttribute("errorMsg", "验证码错误");
-            return "admin/login";
-        }
+//        String kaptchaCode = session.getAttribute("verifyCode") + "";
+//        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
+//            session.setAttribute("errorMsg", "验证码错误");
+//            return "admin/login";
+//        }
 
         AdminUser adminUser = adminUserService.login(userName, password);
         if (adminUser != null) {

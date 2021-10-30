@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.geo.emallmaster.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.geo.emallmaster.entity.User">
+        <id column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
+        <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
+        <result column="password_md5" jdbcType="VARCHAR" property="passwordMd5"/>
+        <result column="introduce_sign" jdbcType="VARCHAR" property="introduceSign"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="locked_flag" jdbcType="TINYINT" property="lockedFlag"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id, nick_name, login_name, password_md5, introduce_sign, address,
+        is_deleted, locked_flag, create_time
+    </sql>
+
+    <select id="findUserList" parameterType="Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE 1=1
+        <if test="loginName != null and loginName != ''">
+        AND login_name = #{loginName}
+        </if>
+            ORDER BY create_time DESC
+        <if test="start != null and limit != null">
+            LIMIT #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalUser" parameterType="Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM user WHERE 1=1
+        <if test="loginName != null and loginName != ''">
+            AND login_name = #{loginName}
+        </if>
+    </select>
+
+</mapper>

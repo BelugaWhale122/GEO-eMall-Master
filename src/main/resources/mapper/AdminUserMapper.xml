@@ -3,21 +3,21 @@
 <mapper namespace="com.geo.emallmaster.dao.AdminUserMapper">
     <resultMap id="BaseResultMap" type="com.geo.emallmaster.entity.AdminUser">
         <id column="admin_user_id" jdbcType="INTEGER" property="adminUserId"/>
-        <result column="login_user_name" jdbcType="VARCHAR" property="loginAdminName"/>
+        <result column="login_admin_name" jdbcType="VARCHAR" property="loginAdminName"/>
         <result column="login_password" jdbcType="VARCHAR" property="loginPassword"/>
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
         <result column="locked" jdbcType="TINYINT" property="locked"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        admin_user_id, login_user_name, login_password, nick_name, locked
+        admin_user_id, login_admin_name, login_password, nick_name, locked
     </sql>
 
     <select id="login" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM tb_admin_user
-        WHERE login_user_name = #{userName, jdbcType=VARCHAR}
+        FROM admin_user
+        WHERE login_admin_name = #{userName, jdbcType=VARCHAR}
         AND login_password = #{password, jdbcType=VARCHAR}
         AND locked = 0
     </select>
@@ -25,24 +25,24 @@
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM tb_admin_user
+        FROM admin_user
         WHERE admin_user_id = #{adminUserId,jdbcType=INTEGER}
     </select>
 
     <insert id="insert" parameterType="com.geo.emallmaster.entity.AdminUser">
-        INSERT INTO tb_admin_user(admin_user_id, login_user_name, login_password, nick_name, locked)
+        INSERT INTO admin_user(admin_user_id, login_admin_name, login_password, nick_name, locked)
         VALUES (#{adminUserId,jdbcType=INTEGER}, #{loginAdminName,jdbcType=VARCHAR}, #{loginPassword, jdbcType=VARCHAR},
                 #{nickName, jdbcType=VARCHAR}, #{locked, jdbcType=TINYINT})
     </insert>
 
     <insert id="insertSelective" parameterType="com.geo.emallmaster.entity.AdminUser">
-        INSERT INTO tb_admin_user
+        INSERT INTO admin_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="adminUserId != null">
                 admin_user_id,
             </if>
             <if test="loginAdminName != null">
-                login_user_name,
+                login_admin_name,
             </if>
             <if test="loginPassword != null">
                 login_password,
@@ -74,18 +74,18 @@
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.geo.emallmaster.entity.AdminUser">
-        UPDATE tb_admin_user
-        SET login_user_name = #{loginAdminName, jdbcType=VARCHAR},
+        UPDATE admin_user
+        SET login_admin_name = #{loginAdminName, jdbcType=VARCHAR},
             nick_name       = #{nickName, jdbcType=VARCHAR},
             locked          = #{locked, jdbcType=TINYINT}
         WHERE admin_user_id = #{adminUserId, jdbcType=INTEGER}
     </update>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.geo.emallmaster.entity.AdminUser">
-        UPDATE tb_admin_user
+        UPDATE admin_user
         <set>
             <if test="loginAdminName != null">
-                login_user_name = #{loginAdminName},
+                login_admin_name = #{loginAdminName},
             </if>
             <if test="loginPassword != null">
                 login_password = #{loginPassword, jdbcType=VARCHAR},

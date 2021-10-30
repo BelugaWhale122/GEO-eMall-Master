@@ -1,8 +1,10 @@
 package com.geo.emallmaster.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author Xu
@@ -43,5 +45,9 @@ public class User {
 
     @Column(name = "locked_flag", nullable = false)
     private Integer lockedFlag;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Column(name = "create_time", nullable = false)
+    private Date createTime;
 
 }
