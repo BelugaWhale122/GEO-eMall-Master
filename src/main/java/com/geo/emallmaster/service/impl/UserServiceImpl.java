@@ -28,4 +28,12 @@ public class UserServiceImpl implements UserService {
         PageResult pageResult = new PageResult(total, pageQueryUtil.getLimit(), pageQueryUtil.getPage(), users);
         return pageResult;
     }
+
+    @Override
+    public Boolean lockUser(Integer[] ids, int lockStatus) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return userMapper.lockUserBatch(ids, lockStatus) > 0;
+    }
 }

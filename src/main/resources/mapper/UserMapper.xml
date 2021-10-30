@@ -24,9 +24,9 @@
         FROM user
         WHERE 1=1
         <if test="loginName != null and loginName != ''">
-        AND login_name = #{loginName}
+            AND login_name = #{loginName}
         </if>
-            ORDER BY create_time DESC
+        ORDER BY create_time DESC
         <if test="start != null and limit != null">
             LIMIT #{start},#{limit}
         </if>
@@ -39,4 +39,10 @@
         </if>
     </select>
 
+    <update id="lockUserBatch">
+        UPDATE user SET locked_flag = #{lockStatus} WHERE user_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

@@ -2,6 +2,7 @@ package com.geo.emallmaster.dao;
 
 import com.geo.emallmaster.entity.User;
 import com.geo.emallmaster.utils.PageQueryUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,4 +30,13 @@ public interface UserMapper {
      * @return
      */
     int getTotalUser(PageQueryUtil pageQueryUtil);
+
+    /**
+     * 批量禁用/解禁用户
+     *
+     * @param ids
+     * @param lockStatus
+     * @return
+     */
+    int lockUserBatch(@Param("ids") Integer[] ids, @Param("lockStatus") int lockStatus);
 }

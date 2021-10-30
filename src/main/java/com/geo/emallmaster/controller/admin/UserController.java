@@ -25,18 +25,40 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public String userPage(HttpServletRequest request){
+    public String userPage(HttpServletRequest request) {
         request.setAttribute("path", "users");
         return "admin/user";
     }
 
+    /**
+     * 用户列表
+     */
     @RequestMapping(value = "/users/list", method = RequestMethod.GET)
     @ResponseBody
-    public Result list(@RequestParam Map<String, Object> parms){
-        if (StringUtils.isEmpty(parms.get("page"))||StringUtils.isEmpty(parms.get("limit"))){
+    public Result list(@RequestParam Map<String, Object> parms) {
+        if (StringUtils.isEmpty(parms.get("page")) || StringUtils.isEmpty(parms.get("limit"))) {
             return ResultGenerator.genFailResult("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(parms);
         return ResultGenerator.genSuccessResult(userService.getUserPage(pageUtil));
+    }
+
+    /**
+     * 用户禁用与解除禁用(0-未锁定 1-已锁定)
+     */
+    @RequestMapping(value = "/users/lock/{lockStatus}", method = RequestMethod.POST)
+    @ResponseBody
+    public Result lockUsers(@RequestBody Integer[] ids, @PathVariable int lockStatus) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (lockStatus != 0 && lockStatus != 1) {
+            return ResultGenerator.genFailResult("非法操作");
+        }
+        if (userService.lockUser(ids, lockStatus)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("操作失败!");
+        }
     }
 }
