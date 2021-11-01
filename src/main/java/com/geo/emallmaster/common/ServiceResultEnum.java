@@ -1,4 +1,4 @@
-package com.geo.emallmaster.controller.common;
+package com.geo.emallmaster.common;
 
 /**
  * @author Xu

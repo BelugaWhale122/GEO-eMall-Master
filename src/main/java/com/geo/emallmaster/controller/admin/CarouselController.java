@@ -1,6 +1,6 @@
 package com.geo.emallmaster.controller.admin;
 
-import com.geo.emallmaster.controller.common.ServiceResultEnum;
+import com.geo.emallmaster.common.ServiceResultEnum;
 import com.geo.emallmaster.entity.Carousel;
 import com.geo.emallmaster.service.CarouselService;
 import com.geo.emallmaster.utils.PageQueryUtil;
@@ -38,7 +38,7 @@ public class CarouselController {
      * @param parms
      * @return
      */
-    @RequestMapping(value = "/carousel/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/carousels/list", method = RequestMethod.GET)
     @ResponseBody
     public Result list(@RequestParam Map<String, Object> parms){
         if (StringUtils.isEmpty(parms.get("page"))
@@ -54,9 +54,9 @@ public class CarouselController {
      * @param carousel
      * @return
      */
-    @RequestMapping(value = "/carousel/save", method = RequestMethod.GET)
+    @RequestMapping(value = "/carousels/save", method = RequestMethod.POST)
     @ResponseBody
-    public Result save(@RequestBody Carousel carousel){
+    public Result save(@RequestBody Carousel carousel) {
         if (StringUtils.isEmpty(carousel.getCarouselUrl())
                 || Objects.isNull(carousel.getCarouselRank())) {
             return ResultGenerator.genFailResult("参数异常！");
@@ -77,7 +77,7 @@ public class CarouselController {
     @RequestMapping(value = "/carousels/update", method = RequestMethod.POST)
     @ResponseBody
     public Result update(@RequestBody Carousel carousel) {
-        if (Objects.isNull(carousel.getId())
+        if (Objects.isNull(carousel.getCarouselId())
                 || StringUtils.isEmpty(carousel.getCarouselUrl())
                 || Objects.isNull(carousel.getCarouselRank())) {
             return ResultGenerator.genFailResult("参数异常！");

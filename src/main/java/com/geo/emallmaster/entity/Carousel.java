@@ -14,7 +14,7 @@ public class Carousel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "carousel_id", nullable = false)
-    private Integer id;
+    private Integer carouselId;
 
     @Column(name = "carousel_url", nullable = false, length = 100)
     private String carouselUrl;

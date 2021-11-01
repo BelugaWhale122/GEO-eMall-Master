@@ -1,6 +1,6 @@
 package com.geo.emallmaster.service.impl;
 
-import com.geo.emallmaster.controller.common.ServiceResultEnum;
+import com.geo.emallmaster.common.ServiceResultEnum;
 import com.geo.emallmaster.dao.CarouselMapper;
 import com.geo.emallmaster.entity.Carousel;
 import com.geo.emallmaster.service.CarouselService;
@@ -41,7 +41,7 @@ public class CarouselServiceImpl implements CarouselService {
 
     @Override
     public String updateCarousel(Carousel carousel) {
-        Carousel temp = carouselMapper.selectByPrimaryKey(carousel.getId());
+        Carousel temp = carouselMapper.selectByPrimaryKey(carousel.getCarouselId());
         if (temp == null) {
             return ServiceResultEnum.DATA_NOT_EXIST.getResult();
         }
