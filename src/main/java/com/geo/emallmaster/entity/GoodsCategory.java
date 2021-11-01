@@ -22,7 +22,7 @@ public class GoodsCategory {
     private Long categoryId;
 
     @Column(name = "category_level", nullable = false)
-    private Integer categoryLevel;
+    private Byte categoryLevel;
 
     @Column(name = "parent_id", nullable = false)
     private Long parentId;
