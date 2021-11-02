@@ -1,6 +1,7 @@
 package com.geo.emallmaster.service;
 
 import com.geo.emallmaster.controller.vo.IndexCategoryVO;
+import com.geo.emallmaster.controller.vo.SearchPageCategoryVO;
 import com.geo.emallmaster.entity.GoodsCategory;
 import com.geo.emallmaster.utils.PageQueryUtil;
 import com.geo.emallmaster.utils.PageResult;
@@ -16,6 +17,7 @@ public interface GoodsCategoryService {
 
     /**
      * 后台分页
+     *
      * @param pageUtil
      * @return
      */
@@ -23,6 +25,7 @@ public interface GoodsCategoryService {
 
     /**
      * 增加
+     *
      * @param goodsCategory
      * @return
      */
@@ -30,6 +33,7 @@ public interface GoodsCategoryService {
 
     /**
      * 批量删除
+     *
      * @param ids
      * @return
      */
@@ -37,6 +41,7 @@ public interface GoodsCategoryService {
 
     /**
      * 修改
+     *
      * @param goodsCategory
      * @return
      */
@@ -44,6 +49,7 @@ public interface GoodsCategoryService {
 
     /**
      * 查找
+     *
      * @param id
      * @return
      */
@@ -51,6 +57,7 @@ public interface GoodsCategoryService {
 
     /**
      * 根据parentId和level获取分类列表
+     *
      * @param parentIds
      * @param categoryLevel
      * @return
@@ -59,7 +66,17 @@ public interface GoodsCategoryService {
 
     /**
      * 返回分类数据(首页调用)
+     *
      * @return
      */
     List<IndexCategoryVO> getCategoriesForIndex();
+
+    /**
+     * 返回分类数据(搜索页调用)
+     *
+     * @param categoryId
+     * @return
+     */
+    SearchPageCategoryVO getCategoriesForSearch(Long categoryId);
+
 }

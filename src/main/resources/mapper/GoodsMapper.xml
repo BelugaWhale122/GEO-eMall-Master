@@ -101,6 +101,42 @@
         </if>
     </select>
 
+    <select id="findGoodsListBySearch" parameterType="Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM goods_info
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                AND (goods_name LIKE CONCAT('%',#{keyword},'%') OR goods_intro LIKE CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="goodsCategoryId !=null and goodsCategoryId !=''">
+                AND goods_category_id = #{goodsCategoryId}
+            </if>
+            <if test="goodsSellStatus !=null">
+                AND goods_sell_status = #{goodsSellStatus}
+            </if>
+        </where>
+        <if test="orderBy !=null and orderBy !=''">
+            <choose>
+                <when test="orderBy == 'new'">
+                    <!-- 按照发布时间倒序排列 -->
+                    ORDER BY goods_id DESC
+                </when>
+                <when test="orderBy == 'price'">
+                    <!-- 按照售价从小到大排列 -->
+                    ORDER BY selling_price ASC
+                </when>
+                <otherwise>
+                    <!-- 默认按照库存数量从大到小排列 -->
+                    ORDER BY stock_num DESC
+                </otherwise>
+            </choose>
+        </if>
+        <if test="start!=null and limit!=null">
+            LIMIT #{start}, #{limit}
+        </if>
+    </select>
+
     <select id="getTotalGoodsBySearch" parameterType="Map" resultType="int">
         SELECT COUNT(*) FROM goods_info
         <where>

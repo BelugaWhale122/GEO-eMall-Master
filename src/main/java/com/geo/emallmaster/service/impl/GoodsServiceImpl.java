@@ -2,17 +2,20 @@ package com.geo.emallmaster.service.impl;
 
 import com.geo.emallmaster.common.CategoryLevelEnum;
 import com.geo.emallmaster.common.ServiceResultEnum;
+import com.geo.emallmaster.controller.vo.SearchGoodsVO;
 import com.geo.emallmaster.dao.GoodsCategoryMapper;
 import com.geo.emallmaster.dao.GoodsMapper;
 import com.geo.emallmaster.entity.Goods;
 import com.geo.emallmaster.entity.GoodsCategory;
 import com.geo.emallmaster.service.GoodsService;
+import com.geo.emallmaster.utils.BeanUtil;
 import com.geo.emallmaster.utils.PageQueryUtil;
 import com.geo.emallmaster.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -92,5 +95,30 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
         return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
+    }
+
+    @Override
+    public PageResult searchGoods(PageQueryUtil pageUtil) {
+        List<Goods> goodsList = goodsMapper.findGoodsListBySearch(pageUtil);
+        int total = goodsMapper.getTotalGoodsBySearch(pageUtil);
+        List<SearchGoodsVO> searchGoodsVOS = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(goodsList)) {
+            searchGoodsVOS = BeanUtil.copyList(goodsList, SearchGoodsVO.class);
+            for (SearchGoodsVO searchGoodsVO : searchGoodsVOS) {
+                String goodsName = searchGoodsVO.getGoodsName();
+                String goodsIntro = searchGoodsVO.getGoodsIntro();
+                // 字符串过长导致文字超出的问题
+                if (goodsName.length() > 28) {
+                    goodsName = goodsName.substring(0, 28) + "...";
+                    searchGoodsVO.setGoodsName(goodsName);
+                }
+                if (goodsIntro.length() > 30) {
+                    goodsIntro = goodsIntro.substring(0, 30) + "...";
+                    searchGoodsVO.setGoodsIntro(goodsIntro);
+                }
+            }
+        }
+        PageResult pageResult = new PageResult(total, pageUtil.getLimit(), pageUtil.getPage(), searchGoodsVOS);
+        return pageResult;
     }
 }

@@ -44,7 +44,6 @@ public interface GoodsService {
      */
     String updateGoods(Goods goods);
 
-
     /**
      * 根据商品id查找商品
      *
@@ -62,4 +61,11 @@ public interface GoodsService {
      */
     Boolean batchUpdateSellStatus(Long[] ids, int sellStatus);
 
+    /**
+     * 商品搜索
+     *
+     * @param pageUtil
+     * @return
+     */
+    PageResult searchGoods(PageQueryUtil pageUtil);
 }

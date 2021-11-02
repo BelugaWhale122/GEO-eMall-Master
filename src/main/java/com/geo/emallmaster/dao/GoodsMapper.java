@@ -37,6 +37,10 @@ public interface GoodsMapper {
 
     List<Goods> selectByPrimaryKeys(List<Long> goodsIds);
 
+    List<Goods> findGoodsListBySearch(PageQueryUtil pageUtil);
+
+    int getTotalGoodsBySearch(PageQueryUtil pageUtil);
+
     int batchInsert(@Param("GoodsList") List<Goods> GoodsList);
 
     int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);

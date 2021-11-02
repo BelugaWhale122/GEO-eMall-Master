@@ -19,7 +19,7 @@
                 <div class="search_hot">
                 </div>
             </div>
-            <div class="button iconfont icon-search" onclick="##"></div>
+            <div class="button iconfont icon-search" onclick="search()"></div>
         </div>
     </div>
 </nav>
@@ -31,14 +31,16 @@
             <li><a href="https://github.com/BelugaWhale122/GEO-eMall-Master">GitHub 地址</a></li>
         </ul>
         <div class="fr">
-            <ul class="login">
-                <li><a th:href="@{/login}">登录</a></li>
-                <li><a th:href="@{/register}">注册</a></li>
-            </ul>
-            <div class="shopcart">
-                <a href="##" style="color: white;"><i class="iconfont icon-cart"></i>
-                    购物车(0)</a>
-            </div>
+            <th:block th:if="${session.User==null}">
+                <ul class="login">
+                    <li><a th:href="@{/login}">登录</a></li>
+                    <li><a th:href="@{/register}">注册</a></li>
+                </ul>
+                <div class="shopcart">
+                    <a href="##" style="color: white;"><i class="iconfont icon-cart"></i>
+                        购物车(0)</a>
+                </div>
+            </th:block>
         </div>
     </div>
 </header>
