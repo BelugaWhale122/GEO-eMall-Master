@@ -31,7 +31,28 @@
             <li><a href="https://github.com/BelugaWhale122/GEO-eMall-Master">GitHub 地址</a></li>
         </ul>
         <div class="fr">
-            <th:block th:if="${session.User==null}">
+            <th:block th:unless="${session.user==null}">
+                <div class="user">
+                    <ul class="selector">
+                        <li>
+                            <a th:href="@{/logout}">
+                                退出登录
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="##" class="username">
+                        <th:block th:text="${session.user.nickName}"></th:block>
+                        <i class="iconfont icon-down"></i>
+                    </a>
+                </div>
+                <div class="shopcart">
+                    <a th:href="@{/shop-cart}" style="color: white;"><i class="iconfont icon-cart"></i>
+                        购物车(
+                        <th:block th:text="${session.user.shopCartItemCount}"></th:block>
+                        )</a>
+                </div>
+            </th:block>
+            <th:block th:if="${session.user==null}">
                 <ul class="login">
                     <li><a th:href="@{/login}">登录</a></li>
                     <li><a th:href="@{/register}">注册</a></li>
@@ -40,6 +61,7 @@
                     <a href="##" style="color: white;"><i class="iconfont icon-cart"></i>
                         购物车(0)</a>
                 </div>
+            </th:block>
             </th:block>
         </div>
     </div>
