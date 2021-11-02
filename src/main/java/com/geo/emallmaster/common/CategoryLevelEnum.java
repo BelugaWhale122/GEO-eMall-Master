@@ -4,6 +4,7 @@ package com.geo.emallmaster.common;
  * @author Xu
  * @version 1.0
  * @date 2021/11/01 21:27
+ * @apiNote 分类级别
  */
 public enum CategoryLevelEnum {
     DEFAULT(0, "ERROR"),
