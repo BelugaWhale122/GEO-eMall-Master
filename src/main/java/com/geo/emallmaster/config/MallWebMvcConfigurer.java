@@ -2,6 +2,7 @@ package com.geo.emallmaster.config;
 
 import com.geo.emallmaster.common.Constants;
 import com.geo.emallmaster.interceptor.AdminLoginInterceptor;
+import com.geo.emallmaster.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -15,8 +16,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class MallWebMvcConfigurer implements WebMvcConfigurer {
+
     @Autowired
     private AdminLoginInterceptor adminLoginInterceptor;
+    @Autowired
+    private LoginInterceptor loginInterceptor;
 
     public void addInterceptors(InterceptorRegistry registry) {
         // 添加一个拦截器，拦截以/admin为前缀的url路径（后台登陆拦截）
@@ -25,6 +29,22 @@ public class MallWebMvcConfigurer implements WebMvcConfigurer {
                 .excludePathPatterns("/admin/login")
                 .excludePathPatterns("/admin/dist/**")
                 .excludePathPatterns("/admin/plugins/**");
+        // 商城页面登陆拦截
+        registry.addInterceptor(loginInterceptor)
+                .excludePathPatterns("/admin/**")
+                .excludePathPatterns("/register")
+                .excludePathPatterns("/login")
+                .excludePathPatterns("/logout")
+                .addPathPatterns("/goods/detail/**")
+                .addPathPatterns("/shop-cart")
+                .addPathPatterns("/shop-cart/**")
+                .addPathPatterns("/saveOrder")
+                .addPathPatterns("/orders")
+                .addPathPatterns("/orders/**")
+                .addPathPatterns("/personal")
+                .addPathPatterns("/personal/updateInfo")
+                .addPathPatterns("/selectPayType")
+                .addPathPatterns("/payPage");
     }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry){
