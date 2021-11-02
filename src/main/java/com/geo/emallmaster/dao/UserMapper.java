@@ -14,6 +14,17 @@ import java.util.List;
  */
 @Component
 public interface UserMapper {
+    int deleteByPrimaryKey(Long userId);
+
+    int insert(User record);
+
+    int insertSelective(User record);
+
+    User selectByPrimaryKey(Long userId);
+
+    User selectByLoginName(String loginName);
+
+    User selectByLoginNameAndPasswd(@Param("loginName") String loginName, @Param("password") String password);
 
     /**
      * 根据参数查询用户列表

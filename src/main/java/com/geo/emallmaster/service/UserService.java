@@ -3,6 +3,8 @@ package com.geo.emallmaster.service;
 import com.geo.emallmaster.utils.PageQueryUtil;
 import com.geo.emallmaster.utils.PageResult;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author Xu
  * @version 1.0
@@ -26,4 +28,22 @@ public interface UserService {
      * @return
      */
     Boolean lockUser(Integer[] ids, int lockStatus);
+
+    /**
+     * 注册
+     * @param loginName
+     * @param password
+     * @return
+     */
+    String register(String loginName, String password);
+
+    /**
+     * 登录
+     * @param loginName
+     * @param passwordMD5
+     * @param httpSession
+     * @return
+     */
+    String login(String loginName, String passwordMD5, HttpSession httpSession);
+
 }
