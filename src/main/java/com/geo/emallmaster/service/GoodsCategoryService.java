@@ -1,5 +1,6 @@
 package com.geo.emallmaster.service;
 
+import com.geo.emallmaster.controller.vo.IndexCategoryVO;
 import com.geo.emallmaster.entity.GoodsCategory;
 import com.geo.emallmaster.utils.PageQueryUtil;
 import com.geo.emallmaster.utils.PageResult;
@@ -55,4 +56,10 @@ public interface GoodsCategoryService {
      * @return
      */
     List<GoodsCategory> selectByLevelAndParentIdsAndNumber(List<Long> parentIds, int categoryLevel);
+
+    /**
+     * 返回分类数据(首页调用)
+     * @return
+     */
+    List<IndexCategoryVO> getCategoriesForIndex();
 }

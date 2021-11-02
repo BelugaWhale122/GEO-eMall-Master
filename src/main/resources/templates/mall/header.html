@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head-fragment(title,path)">
+    <meta charset="UTF-8">
+    <title>GEO-eMall</title>
+    <link rel="stylesheet" th:href="@{/mall/css/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/mall/css/iconfont.css}">
+    <link rel="stylesheet" th:href="@{/mall/css/common.css}">
+    <link rel="stylesheet" th:href="@{/mall/styles/header.css}">
+    <link rel="stylesheet" th:href="@{'/mall/styles/'+${path}+'.css'}">
+    <link rel="stylesheet" th:href="@{/admin/plugins/sweetalert/sweetalert.css}"/>
+</head>
+<nav id="nav" th:fragment="nav-fragment">
+    <div class="banner_x center">
+        <a th:href="@{/index}" class="logo"><h1>GEO商城</h1></a>
+        <div class="fr">
+            <div class="search">
+                <input class="text" type="text" id="keyword" autocomplete="off">
+                <div class="search_hot">
+                </div>
+            </div>
+            <div class="button iconfont icon-search" onclick="##"></div>
+        </div>
+    </div>
+</nav>
+<header id="header" th:fragment="header-fragment">
+    <div class="center">
+        <ul class="fl">
+            <li><a th:href="@{/index}">GEO商城</a></li>
+            <li><a th:href="@{/admin}">后台管理系统</a></li>
+            <li><a href="https://github.com/BelugaWhale122/GEO-eMall-Master">GitHub 地址</a></li>
+        </ul>
+        <div class="fr">
+            <ul class="login">
+                <li><a th:href="@{/login}">登录</a></li>
+                <li><a th:href="@{/register}">注册</a></li>
+            </ul>
+            <div class="shopcart">
+                <a href="##" style="color: white;"><i class="iconfont icon-cart"></i>
+                    购物车(0)</a>
+            </div>
+        </div>
+    </div>
+</header>
+</html>

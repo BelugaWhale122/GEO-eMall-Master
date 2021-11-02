@@ -1,7 +1,7 @@
 package com.geo.emallmaster.service;
 
+import com.geo.emallmaster.controller.vo.IndexCarouselVO;
 import com.geo.emallmaster.entity.Carousel;
-import com.geo.emallmaster.entity.IndexConfig;
 import com.geo.emallmaster.utils.PageQueryUtil;
 import com.geo.emallmaster.utils.PageResult;
 
@@ -54,4 +54,10 @@ public interface CarouselService {
      */
     Boolean deleteBatch(Integer[] ids);
 
+    /**
+     * 返回轮播图数据(首页调用)
+     * @param number
+     * @return
+     */
+    List<IndexCarouselVO> getCarouselForIndex(int number);
 }

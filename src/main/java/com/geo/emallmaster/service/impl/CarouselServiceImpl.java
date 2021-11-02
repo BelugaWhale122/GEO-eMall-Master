@@ -1,14 +1,18 @@
 package com.geo.emallmaster.service.impl;
 
 import com.geo.emallmaster.common.ServiceResultEnum;
+import com.geo.emallmaster.controller.vo.IndexCarouselVO;
 import com.geo.emallmaster.dao.CarouselMapper;
 import com.geo.emallmaster.entity.Carousel;
 import com.geo.emallmaster.service.CarouselService;
+import com.geo.emallmaster.utils.BeanUtil;
 import com.geo.emallmaster.utils.PageQueryUtil;
 import com.geo.emallmaster.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,5 +71,15 @@ public class CarouselServiceImpl implements CarouselService {
         }
         //删除数据
         return carouselMapper.deleteBatch(ids) > 0;
+    }
+
+    @Override
+    public List<IndexCarouselVO> getCarouselForIndex(int number) {
+        List<IndexCarouselVO> indexCarouselVOS = new ArrayList<>(number);
+        List<Carousel> carousels = carouselMapper.findCarouselsByNum(number);
+        if (!CollectionUtils.isEmpty(carousels)) {
+            indexCarouselVOS = BeanUtil.copyList(carousels, IndexCarouselVO.class);
+        }
+        return indexCarouselVOS;
     }
 }
