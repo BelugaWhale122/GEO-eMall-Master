@@ -38,7 +38,7 @@ public class GoodsController {
 
     @GetMapping("/goods")
     public String goodsPage(HttpServletRequest request) {
-        request.setAttribute("path", "newbee_mall_goods");
+        request.setAttribute("path", "goods");
         return "admin/goods";
     }
 
