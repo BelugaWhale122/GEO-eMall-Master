@@ -1,13 +1,17 @@
 package com.geo.emallmaster.controller.mall;
 
 import com.geo.emallmaster.common.Constants;
+import com.geo.emallmaster.controller.vo.GoodsDetailVO;
 import com.geo.emallmaster.controller.vo.SearchPageCategoryVO;
+import com.geo.emallmaster.entity.Goods;
 import com.geo.emallmaster.service.GoodsCategoryService;
 import com.geo.emallmaster.service.GoodsService;
+import com.geo.emallmaster.utils.BeanUtil;
 import com.geo.emallmaster.utils.PageQueryUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
@@ -61,4 +65,19 @@ public class IndexGoodsController {
         return "mall/search";
     }
 
+    @GetMapping("/goods/detail/{goodsId}")
+    public String detailPage(@PathVariable("goodsId") Long goodsId, HttpServletRequest request) {
+        if (goodsId < 1) {
+            return "error/error_5xx";
+        }
+        Goods goods = goodsService.getGoodsById(goodsId);
+        if (goods == null) {
+            return "error";
+        }
+        GoodsDetailVO goodsDetailVO = new GoodsDetailVO();
+        BeanUtil.copyProperties(goods, goodsDetailVO);
+        goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
+        request.setAttribute("goodsDetail", goodsDetailVO);
+        return "mall/detail";
+    }
 }
