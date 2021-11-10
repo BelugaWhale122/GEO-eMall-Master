@@ -6,12 +6,10 @@ import com.geo.emallmaster.controller.vo.UserVO;
 import com.geo.emallmaster.dao.UserMapper;
 import com.geo.emallmaster.entity.User;
 import com.geo.emallmaster.service.UserService;
-import com.geo.emallmaster.utils.BeanUtil;
-import com.geo.emallmaster.utils.MD5Util;
-import com.geo.emallmaster.utils.PageQueryUtil;
-import com.geo.emallmaster.utils.PageResult;
+import com.geo.emallmaster.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -78,5 +76,30 @@ public class UserServiceImpl implements UserService {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.LOGIN_ERROR.getResult();
+    }
+
+    @Override
+    public UserVO updateUserInfo(User user, HttpSession httpSession) {
+        UserVO userTemp = (UserVO) httpSession.getAttribute(Constants.USER_SESSION_KEY);
+        User userFromDB = userMapper.selectByPrimaryKey(userTemp.getUserId());
+        if (userFromDB != null) {
+            if (!StringUtils.isEmpty(user.getNickName())) {
+                userFromDB.setNickName(MallUtils.cleanString(user.getNickName()));
+            }
+            if (!StringUtils.isEmpty(user.getAddress())) {
+                userFromDB.setAddress(MallUtils.cleanString(user.getAddress()));
+            }
+            if (!StringUtils.isEmpty(user.getIntroduceSign())) {
+                userFromDB.setIntroduceSign(MallUtils.cleanString(user.getIntroduceSign()));
+            }
+            if (userMapper.updateByPrimaryKeySelective(userFromDB) > 0) {
+                UserVO userVO = new UserVO();
+                userFromDB = userMapper.selectByPrimaryKey(user.getUserId());
+                BeanUtil.copyProperties(userFromDB, userVO);
+                httpSession.setAttribute(Constants.USER_SESSION_KEY, userVO);
+                return userVO;
+            }
+        }
+        return null;
     }
 }

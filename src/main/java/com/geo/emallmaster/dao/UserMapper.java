@@ -50,4 +50,8 @@ public interface UserMapper {
      * @return
      */
     int lockUserBatch(@Param("ids") Integer[] ids, @Param("lockStatus") int lockStatus);
+
+    int updateByPrimaryKeySelective(User record);
+
+    int updateByPrimaryKey(User record);
 }

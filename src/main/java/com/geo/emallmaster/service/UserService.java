@@ -1,5 +1,7 @@
 package com.geo.emallmaster.service;
 
+import com.geo.emallmaster.controller.vo.UserVO;
+import com.geo.emallmaster.entity.User;
 import com.geo.emallmaster.utils.PageQueryUtil;
 import com.geo.emallmaster.utils.PageResult;
 
@@ -31,6 +33,7 @@ public interface UserService {
 
     /**
      * 注册
+     *
      * @param loginName
      * @param password
      * @return
@@ -39,6 +42,7 @@ public interface UserService {
 
     /**
      * 登录
+     *
      * @param loginName
      * @param passwordMD5
      * @param httpSession
@@ -46,4 +50,12 @@ public interface UserService {
      */
     String login(String loginName, String passwordMD5, HttpSession httpSession);
 
+    /**
+     * 修改用户信息
+     *
+     * @param user
+     * @param httpSession
+     * @return
+     */
+    UserVO updateUserInfo(User user, HttpSession httpSession);
 }

@@ -144,4 +144,48 @@
             #{id}
         </foreach>
     </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.geo.emallmaster.entity.User">
+        UPDATE user
+        <set>
+            <if test="nickName != null">
+                nick_name = #{nickName, jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null">
+                login_name = #{loginName, jdbcType=VARCHAR},
+            </if>
+            <if test="passwordMd5 != null">
+                password_md5 = #{passwordMd5, jdbcType=VARCHAR},
+            </if>
+            <if test="introduceSign != null">
+                introduce_sign = #{introduceSign, jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address, jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted, jdbcType=TINYINT},
+            </if>
+            <if test="lockedFlag != null">
+                locked_flag = #{lockedFlag, jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime, jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE user_id = #{userId, jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.geo.emallmaster.entity.User">
+        UPDATE user
+        SET nick_name      = #{nickName, jdbcType=VARCHAR},
+            login_name     = #{loginName, jdbcType=VARCHAR},
+            password_md5   = #{passwordMd5, jdbcType=VARCHAR},
+            introduce_sign = #{introduceSign, jdbcType=VARCHAR},
+            address        = #{address, jdbcType=VARCHAR},
+            is_deleted     = #{isDeleted, jdbcType=TINYINT},
+            locked_flag    = #{lockedFlag, jdbcType=TINYINT},
+            create_time    = #{createTime, jdbcType=TIMESTAMP}
+        WHERE user_id = #{userId, jdbcType=BIGINT}
+    </update>
 </mapper>

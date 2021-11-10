@@ -2,6 +2,8 @@ package com.geo.emallmaster.controller.mall;
 
 import com.geo.emallmaster.common.Constants;
 import com.geo.emallmaster.common.ServiceResultEnum;
+import com.geo.emallmaster.controller.vo.UserVO;
+import com.geo.emallmaster.entity.User;
 import com.geo.emallmaster.service.UserService;
 import com.geo.emallmaster.utils.MD5Util;
 import com.geo.emallmaster.utils.Result;
@@ -9,11 +11,9 @@ import com.geo.emallmaster.utils.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -49,6 +49,7 @@ public class PersonalController {
 
     /**
      * 退出
+     *
      * @param httpSession
      * @return
      */
@@ -116,5 +117,25 @@ public class PersonalController {
         }
         //注册失败
         return ResultGenerator.genFailResult(registerResult);
+    }
+
+    @GetMapping("/personal")
+    public String personalPage(HttpServletRequest request, HttpSession httpSession) {
+        request.setAttribute("path", "personal");
+        return "mall/personal";
+    }
+
+    @PostMapping("/personal/updateInfo")
+    @ResponseBody
+    public Result updateInfo(@RequestBody User user, HttpSession httpSession) {
+        UserVO userTemp = userService.updateUserInfo(user, httpSession);
+        if (userTemp == null) {
+            Result result = ResultGenerator.genFailResult("修改失败");
+            return result;
+        } else {
+            //返回成功
+            Result result = ResultGenerator.genSuccessResult();
+            return result;
+        }
     }
 }
