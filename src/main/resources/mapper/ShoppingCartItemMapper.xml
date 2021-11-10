@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.geo.emallmaster.dao.ShoppingCarItemMapper">
+<mapper namespace="com.geo.emallmaster.dao.ShoppingCartItemMapper">
     <resultMap id="BaseResultMap" type="com.geo.emallmaster.entity.ShoppingCartItem">
         <id column="cart_item_id" jdbcType="BIGINT" property="cartItemId"/>
         <result column="user_id" jdbcType="BIGINT" property="userId"/>

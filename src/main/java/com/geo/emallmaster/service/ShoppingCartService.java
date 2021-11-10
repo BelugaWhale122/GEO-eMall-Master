@@ -10,7 +10,7 @@ import java.util.List;
  * @version 1.0
  * @date 2021/11/02 23:32
  */
-public interface ShoppingCarService {
+public interface ShoppingCartService {
 
     /**
      * 添加商品至购物车中

@@ -124,14 +124,14 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
                         //根据 parentId 将 thirdLevelCategories 分组
                         Map<Long, List<SecondLevelCategoryVO>> secondLevelCategoryVOMap = secondLevelCategoryVOS.stream().collect(groupingBy(SecondLevelCategoryVO::getParentId));
                         for (GoodsCategory firstCategory : firstLevelCategories) {
-                            IndexCategoryVO newBeeMallIndexCategoryVO = new IndexCategoryVO();
-                            BeanUtil.copyProperties(firstCategory, newBeeMallIndexCategoryVO);
+                            IndexCategoryVO indexCategoryVO = new IndexCategoryVO();
+                            BeanUtil.copyProperties(firstCategory, indexCategoryVO);
                             //如果该一级分类下有数据则放入 indexCategoryVOS 对象中
                             if (secondLevelCategoryVOMap.containsKey(firstCategory.getCategoryId())) {
                                 //根据一级分类的id取出secondLevelCategoryVOMap分组中的二级级分类list
                                 List<SecondLevelCategoryVO> tempGoodsCategories = secondLevelCategoryVOMap.get(firstCategory.getCategoryId());
-                                newBeeMallIndexCategoryVO.setSecondLevelCategoryVOS(tempGoodsCategories);
-                                indexCategoryVOS.add(newBeeMallIndexCategoryVO);
+                                indexCategoryVO.setSecondLevelCategoryVOS(tempGoodsCategories);
+                                indexCategoryVOS.add(indexCategoryVO);
                             }
                         }
                     }

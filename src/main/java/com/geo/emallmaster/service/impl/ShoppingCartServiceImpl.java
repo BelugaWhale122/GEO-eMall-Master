@@ -4,10 +4,10 @@ import com.geo.emallmaster.common.Constants;
 import com.geo.emallmaster.common.ServiceResultEnum;
 import com.geo.emallmaster.controller.vo.ShoppingCartItemVO;
 import com.geo.emallmaster.dao.GoodsMapper;
-import com.geo.emallmaster.dao.ShoppingCarItemMapper;
+import com.geo.emallmaster.dao.ShoppingCartItemMapper;
 import com.geo.emallmaster.entity.Goods;
 import com.geo.emallmaster.entity.ShoppingCartItem;
-import com.geo.emallmaster.service.ShoppingCarService;
+import com.geo.emallmaster.service.ShoppingCartService;
 import com.geo.emallmaster.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,16 +23,16 @@ import java.util.stream.Collectors;
  * @date 2021/11/02 23:33
  */
 @Service
-public class ShoppingCarServiceImpl implements ShoppingCarService {
+public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Autowired
-    private ShoppingCarItemMapper shoppingCarItemMapper;
+    private ShoppingCartItemMapper shoppingCartItemMapper;
     @Autowired
     private GoodsMapper goodsMapper;
 
     @Override
     public String saveShoppingCartItem(ShoppingCartItem shoppingCartItem) {
-        ShoppingCartItem temp = shoppingCarItemMapper.selectByUserIdAndGoodsId(shoppingCartItem.getUserId(), shoppingCartItem.getGoodsId());
+        ShoppingCartItem temp = shoppingCartItemMapper.selectByUserIdAndGoodsId(shoppingCartItem.getUserId(), shoppingCartItem.getGoodsId());
         if (temp != null) {
             //已存在则修改该记录
             temp.setGoodsCount(shoppingCartItem.getGoodsCount());
@@ -43,7 +43,7 @@ public class ShoppingCarServiceImpl implements ShoppingCarService {
         if (goods == null) {
             return ServiceResultEnum.GOODS_NOT_EXIST.getResult();
         }
-        int totalItem = shoppingCarItemMapper.selectCountByUserId(shoppingCartItem.getUserId()) + 1;
+        int totalItem = shoppingCartItemMapper.selectCountByUserId(shoppingCartItem.getUserId()) + 1;
         //超出单个商品的最大数量
         if (shoppingCartItem.getGoodsCount() > Constants.SHOPPING_CART_ITEM_LIMIT_NUMBER) {
             return ServiceResultEnum.SHOPPING_CART_ITEM_LIMIT_NUMBER_ERROR.getResult();
@@ -53,7 +53,7 @@ public class ShoppingCarServiceImpl implements ShoppingCarService {
             return ServiceResultEnum.SHOPPING_CART_ITEM_TOTAL_NUMBER_ERROR.getResult();
         }
         //保存记录
-        if (shoppingCarItemMapper.insertSelective(shoppingCartItem) > 0) {
+        if (shoppingCartItemMapper.insertSelective(shoppingCartItem) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();
@@ -61,7 +61,7 @@ public class ShoppingCarServiceImpl implements ShoppingCarService {
 
     @Override
     public String updateShoppingCartItem(ShoppingCartItem shoppingCartItem) {
-        ShoppingCartItem shoppingCartItemUpdate = shoppingCarItemMapper.selectByPrimaryKey(shoppingCartItem.getCartItemId());
+        ShoppingCartItem shoppingCartItemUpdate = shoppingCartItemMapper.selectByPrimaryKey(shoppingCartItem.getCartItemId());
         if (shoppingCartItemUpdate == null) {
             return ServiceResultEnum.DATA_NOT_EXIST.getResult();
         }
@@ -80,7 +80,7 @@ public class ShoppingCarServiceImpl implements ShoppingCarService {
         shoppingCartItemUpdate.setGoodsCount(shoppingCartItem.getGoodsCount());
         shoppingCartItemUpdate.setUpdateTime(new Date());
         //修改记录
-        if (shoppingCarItemMapper.updateByPrimaryKeySelective(shoppingCartItemUpdate) > 0) {
+        if (shoppingCartItemMapper.updateByPrimaryKeySelective(shoppingCartItemUpdate) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();
@@ -88,12 +88,12 @@ public class ShoppingCarServiceImpl implements ShoppingCarService {
 
     @Override
     public ShoppingCartItem getShoppingCartItemById(Long shoppingCartItemId) {
-        return shoppingCarItemMapper.selectByPrimaryKey(shoppingCartItemId);
+        return shoppingCartItemMapper.selectByPrimaryKey(shoppingCartItemId);
     }
 
     @Override
     public Boolean deleteById(Long shoppingCartItemId, Long userId) {
-        ShoppingCartItem shoppingCartItem = shoppingCarItemMapper.selectByPrimaryKey(shoppingCartItemId);
+        ShoppingCartItem shoppingCartItem = shoppingCartItemMapper.selectByPrimaryKey(shoppingCartItemId);
         if (shoppingCartItem == null) {
             return false;
         }
@@ -101,13 +101,13 @@ public class ShoppingCarServiceImpl implements ShoppingCarService {
         if (!userId.equals(shoppingCartItem.getUserId())) {
             return false;
         }
-        return shoppingCarItemMapper.deleteByPrimaryKey(shoppingCartItemId) > 0;
+        return shoppingCartItemMapper.deleteByPrimaryKey(shoppingCartItemId) > 0;
     }
 
     @Override
     public List<ShoppingCartItemVO> getMyShoppingCartItems(Long userId) {
         List<ShoppingCartItemVO> shoppingCartItemVOS = new ArrayList<>();
-        List<ShoppingCartItem> shoppingCartItems = shoppingCarItemMapper.selectByUserId(userId, Constants.SHOPPING_CART_ITEM_TOTAL_NUMBER);
+        List<ShoppingCartItem> shoppingCartItems = shoppingCartItemMapper.selectByUserId(userId, Constants.SHOPPING_CART_ITEM_TOTAL_NUMBER);
         if (!CollectionUtils.isEmpty(shoppingCartItems)) {
             //查询商品信息并做数据转换
             List<Long> goodsIdsoodsIds = shoppingCartItems.stream().map(ShoppingCartItem::getGoodsId).collect(Collectors.toList());
@@ -120,15 +120,15 @@ public class ShoppingCarServiceImpl implements ShoppingCarService {
                 ShoppingCartItemVO shoppingCartItemVO = new ShoppingCartItemVO();
                 BeanUtil.copyProperties(shoppingCartItem, shoppingCartItemVO);
                 if (goodsMap.containsKey(shoppingCartItem.getGoodsId())) {
-                    Goods newBeeMallGoodsTemp = goodsMap.get(shoppingCartItem.getGoodsId());
-                    shoppingCartItemVO.setGoodsCoverImg(newBeeMallGoodsTemp.getGoodsCoverImg());
-                    String goodsName = newBeeMallGoodsTemp.getGoodsName();
+                    Goods goodsTemp = goodsMap.get(shoppingCartItem.getGoodsId());
+                    shoppingCartItemVO.setGoodsCoverImg(goodsTemp.getGoodsCoverImg());
+                    String goodsName = goodsTemp.getGoodsName();
                     // 字符串过长导致文字超出的问题
                     if (goodsName.length() > 28) {
                         goodsName = goodsName.substring(0, 28) + "...";
                     }
                     shoppingCartItemVO.setGoodsName(goodsName);
-                    shoppingCartItemVO.setSellingPrice(newBeeMallGoodsTemp.getSellingPrice());
+                    shoppingCartItemVO.setSellingPrice(goodsTemp.getSellingPrice());
                     shoppingCartItemVOS.add(shoppingCartItemVO);
                 }
             }

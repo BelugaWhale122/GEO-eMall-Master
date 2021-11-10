@@ -12,7 +12,7 @@ import java.util.List;
  * @date 2021/11/02 23:33
  */
 @Component
-public interface ShoppingCarItemMapper {
+public interface ShoppingCartItemMapper {
     int deleteByPrimaryKey(Long cartItemId);
 
     int insert(ShoppingCartItem record);

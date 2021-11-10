@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -35,16 +34,16 @@ public class Order {
     private Integer totalPrice;
 
     @Column(name = "pay_status", nullable = false)
-    private Integer payStatus;
+    private Byte payStatus;
 
     @Column(name = "pay_type", nullable = false)
-    private Integer payType;
+    private Byte payType;
 
     @Column(name = "pay_time")
-    private Instant payTime;
+    private Date payTime;
 
     @Column(name = "order_status", nullable = false)
-    private Integer orderStatus;
+    private Byte orderStatus;
 
     @Column(name = "extra_info", nullable = false, length = 100)
     private String extraInfo;
