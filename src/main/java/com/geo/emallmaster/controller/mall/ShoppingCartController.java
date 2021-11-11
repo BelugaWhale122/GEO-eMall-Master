@@ -114,7 +114,7 @@ public class ShoppingCartController {
                 priceTotal += shoppingCartItemVO.getGoodsCount() * shoppingCartItemVO.getSellingPrice();
             }
             if (priceTotal < 1) {
-                return "error/error_5xx";
+                return "error";
             }
         }
         request.setAttribute("priceTotal", priceTotal);
