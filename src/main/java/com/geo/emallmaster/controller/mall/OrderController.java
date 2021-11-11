@@ -16,10 +16,7 @@ import com.geo.emallmaster.utils.ResultGenerator;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -84,7 +81,7 @@ public class OrderController {
         return "redirect:/orders/" + saveOrderResult;
     }
 
-    @GetMapping("/orders/{orderNo}/cancel")
+    @PutMapping("/orders/{orderNo}/cancel")
     @ResponseBody
     public Result cancelOrder(@PathVariable("orderNo") String orderNo, HttpSession httpSession) {
         UserVO user = (UserVO) httpSession.getAttribute(Constants.USER_SESSION_KEY);
@@ -93,6 +90,18 @@ public class OrderController {
             return ResultGenerator.genSuccessResult();
         } else {
             return ResultGenerator.genFailResult(cancelResult);
+        }
+    }
+
+    @PutMapping("orders/{orderNo}/finish")
+    @ResponseBody
+    public Result finishOrder(@PathVariable("orderNo") String orderNo, HttpSession httpSession) {
+        UserVO user = (UserVO) httpSession.getAttribute(Constants.USER_SESSION_KEY);
+        String finishResult = orderService.finishOrder(orderNo, user.getUserId());
+        if (ServiceResultEnum.SUCCESS.getResult().equals(finishResult)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(finishResult);
         }
     }
 
