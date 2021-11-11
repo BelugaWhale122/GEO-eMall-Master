@@ -1,20 +1,25 @@
 package com.geo.emallmaster.controller.mall;
 
 import com.geo.emallmaster.common.Constants;
+import com.geo.emallmaster.common.OrderStatusEnum;
 import com.geo.emallmaster.common.ServiceResultEnum;
 import com.geo.emallmaster.controller.common.MallException;
 import com.geo.emallmaster.controller.vo.OrderDetailVO;
 import com.geo.emallmaster.controller.vo.ShoppingCartItemVO;
 import com.geo.emallmaster.controller.vo.UserVO;
+import com.geo.emallmaster.entity.Order;
 import com.geo.emallmaster.service.OrderService;
 import com.geo.emallmaster.service.ShoppingCartService;
 import com.geo.emallmaster.utils.PageQueryUtil;
+import com.geo.emallmaster.utils.Result;
+import com.geo.emallmaster.utils.ResultGenerator;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -77,5 +82,71 @@ public class OrderController {
         String saveOrderResult = orderService.saveOrder(user, myShoppingCartItems);
         //跳转到订单详情页
         return "redirect:/orders/" + saveOrderResult;
+    }
+
+    @GetMapping("/orders/{orderNo}/cancel")
+    @ResponseBody
+    public Result cancelOrder(@PathVariable("orderNo") String orderNo, HttpSession httpSession) {
+        UserVO user = (UserVO) httpSession.getAttribute(Constants.USER_SESSION_KEY);
+        String cancelResult = orderService.cancelOrder(orderNo, user.getUserId());
+        if (ServiceResultEnum.SUCCESS.getResult().equals(cancelResult)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(cancelResult);
+        }
+    }
+
+    @GetMapping("/selectPayType")
+    public String selectPayType(HttpServletRequest request,
+                                @RequestParam("orderNo") String orderNo,
+                                HttpSession httpSession) {
+        UserVO user = (UserVO) httpSession.getAttribute(Constants.USER_SESSION_KEY);
+        Order order = orderService.getOrderByOrderNo(orderNo);
+        //判断订单userId
+        if (!user.getUserId().equals(order.getUserId())) {
+            MallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
+        }
+        //判断订单状态
+        if (order.getOrderStatus().intValue() != OrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
+            MallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
+        }
+        request.setAttribute("orderNo", orderNo);
+        request.setAttribute("totalPrice", order.getTotalPrice());
+        return "mall/pay-select";
+    }
+
+    @GetMapping("/payPage")
+    public String payOrder(HttpServletRequest request,
+                           @RequestParam("orderNo") String orderNo,
+                           HttpSession httpSession,
+                           @RequestParam("payType") int payType) {
+        UserVO user = (UserVO) httpSession.getAttribute(Constants.USER_SESSION_KEY);
+        Order order = orderService.getOrderByOrderNo(orderNo);
+        //判断订单userId
+        if (!user.getUserId().equals(order.getUserId())) {
+            MallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
+        }
+        //判断订单状态
+        if (order.getOrderStatus().intValue() != OrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
+            MallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
+        }
+        request.setAttribute("orderNo", orderNo);
+        request.setAttribute("totalPrice", order.getTotalPrice());
+        if (payType == 1) {
+            return "mall/alipay";
+        } else {
+            return "mall/wxpay";
+        }
+    }
+
+    @GetMapping("/paySuccess")
+    @ResponseBody
+    public Result paySuccess(@RequestParam("orderNo") String orderNo, @RequestParam("payType") int payType) {
+        String payResult = orderService.paySuccess(orderNo, payType);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(payResult)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(payResult);
+        }
     }
 }
