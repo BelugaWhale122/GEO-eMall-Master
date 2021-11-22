@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
     private GoodsMapper goodsMapper;
 
     @Override
-    public PageResult OrderPage(PageQueryUtil pageUtil) {
+    public PageResult getOrderPage(PageQueryUtil pageUtil) {
         List<Order> orders = orderMapper.findOrderList(pageUtil);
         int total = orderMapper.getTotalOrders(pageUtil);
         PageResult pageResult = new PageResult(total, pageUtil.getLimit(), pageUtil.getPage(), orders);

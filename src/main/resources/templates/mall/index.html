@@ -38,15 +38,28 @@
         </div>
         <div class="swiper-container fl">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="./mall/image/swiper/banner01.jpg" alt="">
-                </div>
-                <div class="swiper-slide">
-                    <img src="./mall/image/swiper/banner02.jpg" alt="">
-                </div>
-                <div class="swiper-slide">
-                    <img src="./mall/image/swiper/banner03.jpg" alt="">
-                </div>
+                <!-- 配置了轮播图则显示后台配置的轮播图 -->
+                <th:block th:unless="${#lists.isEmpty(carousels)}">
+                    <th:block th:each="carousel : ${carousels}">
+                        <div class="swiper-slide">
+                            <a th:href="@{${carousel.redirectUrl}}">
+                                <img th:src="@{${carousel.carouselUrl}}" alt="">
+                            </a>
+                        </div>
+                    </th:block>
+                </th:block>
+                <!-- 未配置轮播图则显示默认的三张轮播图 -->
+                <th:block th:if="${#lists.isEmpty(carousels)}">
+                    <div class="swiper-slide">
+                        <img src="./mall/image/swiper/banner01.jpg" alt="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./mall/image/swiper/banner02.jpg" alt="">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="./mall/image/swiper/banner03.jpg" alt="">
+                    </div>
+                </th:block>
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>

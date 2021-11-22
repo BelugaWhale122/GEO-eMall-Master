@@ -23,7 +23,7 @@ public interface OrderService {
      * @param pageUtil
      * @return
      */
-    PageResult OrderPage(PageQueryUtil pageUtil);
+    PageResult getOrderPage(PageQueryUtil pageUtil);
 
     /**
      * 修改

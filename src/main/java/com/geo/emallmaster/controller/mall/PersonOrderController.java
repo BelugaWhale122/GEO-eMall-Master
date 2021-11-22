@@ -30,7 +30,7 @@ import java.util.Map;
  * @date 2021/11/08 8:50
  */
 @Controller
-public class OrderController {
+public class PersonOrderController {
 
     @Resource
     private ShoppingCartService shoppingCartService;
