@@ -39,14 +39,14 @@ public class ShoppingCartController {
             //购物项总数
             itemsTotal = myShoppingCartItems.stream().mapToInt(ShoppingCartItemVO::getGoodsCount).sum();
             if (itemsTotal < 1) {
-                return "error";
+                return "error/error_5xx";
             }
             //总价
             for (ShoppingCartItemVO shoppingCartItemVO : myShoppingCartItems) {
                 priceTotal += shoppingCartItemVO.getGoodsCount() * shoppingCartItemVO.getSellingPrice();
             }
             if (priceTotal < 1) {
-                return "error";
+                return "error/error_5xx";
             }
         }
         request.setAttribute("itemsTotal", itemsTotal);
@@ -114,7 +114,7 @@ public class ShoppingCartController {
                 priceTotal += shoppingCartItemVO.getGoodsCount() * shoppingCartItemVO.getSellingPrice();
             }
             if (priceTotal < 1) {
-                return "error";
+                return "error/error_5xx";
             }
         }
         request.setAttribute("priceTotal", priceTotal);

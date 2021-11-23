@@ -60,7 +60,7 @@ public class GoodsController {
                 return "admin/goods_edit";
             }
         }
-        return "error";
+        return "error/error_5xx";
     }
 
     @GetMapping("/goods/edit/{goodsId}")
