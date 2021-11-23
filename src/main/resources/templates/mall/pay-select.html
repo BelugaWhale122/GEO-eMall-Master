@@ -154,16 +154,6 @@
 
 <!-- jQuery -->
 <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
-<script type="text/javascript">
-    //给出提醒
-    $('.J_bank').click(function () {
-        alert('暂不支持，请耐心等候');
-    })
-
-    function payOrder(payType) {
-        var orderNo = $("#orderNoValue").val();
-        window.location.href = '/payPage?orderNo=' + orderNo + "&payType=" + payType;
-    }
-</script>
+<script th:src="@{/mall/js/pay-select.js}" type="text/javascript"></script>
 </body>
 </html>
